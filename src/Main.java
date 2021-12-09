@@ -35,10 +35,27 @@ public class Main {
 //        Tính tổng giá các sản phẩm
         int sumProduct = 0;
         for (int i = 0; i < productlist.length; i++) {
-            sumProduct+=productlist[i].getPrice();
+            sumProduct += productlist[i].getPrice();
         }
-        System.out.println("Tổng giá sản phẩm = "+ sumProduct);
+        System.out.println("Tổng giá sản phẩm = " + sumProduct);
 
+//        Nâng cao 1: Xây dựng hàm sửa sản phẩm theo mã
+        System.out.println("Điền mã để sửa sản phẩm");
+        String code = sc.nextLine();
+        insertItem(code,productlist,sc);
+        for (int i = 0; i < productlist.length; i++) {
+            System.out.println(productlist[i].toString());
+        }
+
+//        Nâng cao 2: Xây dựng hàm xóa sản phẩm theo mã
+
+        System.out.println("Điền mã để xóa sản phẩm");
+        String code2 = sc.nextLine();
+        Product[] productsNew = new Product[deleteItem(code2,productlist,sc).length];
+        deleteItem(code2,productlist,sc);
+        for (int i = 0; i < productsNew.length; i++) {
+            System.out.println(productlist[i].toString());
+        }
     }
 
 
@@ -60,5 +77,42 @@ public class Main {
         return new Product(code, name, price, type);
     }
 
+    public static Product[] insertItem(String code, Product[] productslist, Scanner sc) {
+        int count = 0;
+        for (int i = 0; i < productslist.length; i++) {
+            if (productslist[i].getCode().equals(code)) {
+                count++;
+                System.out.println("Sửa lại sản phẩm thứ " + (i + 1));
+                System.out.println("Nhập tên");
+                productslist[i].setName(sc.nextLine());
+                System.out.println("Nhập giá");
+                productslist[i].setPrice(sc.nextInt());
+                sc.nextLine();
+                System.out.println("Nhập loại");
+                productslist[i].setType(sc.nextLine());
+            }
+        }
+        if (count == 0) {
+            System.out.println("Không tồn tại sản phẩm trong data");
+        }
+        return productslist;
+    }
 
+    public static Product[] deleteItem(String code, Product[] productslist, Scanner sc) {
+        int count = 0;
+
+        for (int i = 0; i < productslist.length; i++) {
+            int c=0;
+            if (!productslist[i].getCode().equals(code)) {
+                productslist[c] = productslist[i];
+                c++;
+                count++;
+            }
+        }
+        Product[] productlistNew = new Product[productslist.length - count];
+        for (int i = 0; i < productlistNew.length; i++) {
+            productlistNew[i] = productslist[i];
+        }
+        return productlistNew;
+    }
 }
