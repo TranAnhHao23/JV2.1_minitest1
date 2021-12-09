@@ -51,8 +51,8 @@ public class Main {
 
         System.out.println("Điền mã để xóa sản phẩm");
         String code2 = sc.nextLine();
-        Product[] productsNew = new Product[deleteItem(code2,productlist,sc).length];
-        deleteItem(code2,productlist,sc);
+        Product[] productsNew = deleteItem(code2,productlist,sc);
+//        deleteItem(code2,productlist,sc);
         for (int i = 0; i < productsNew.length; i++) {
             System.out.println(productlist[i].toString());
         }
